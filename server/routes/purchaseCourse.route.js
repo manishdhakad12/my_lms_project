@@ -118,15 +118,26 @@
 
 import express from "express";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
-import { createCheckoutSession, getAllPurchasedCourse, getCourseDetailWithPurchaseStatus, handleCashfreeWebhook } from "../controllers/coursePurchase.controller.js";
+// import { createCashfreeOrder } from "../controllers/coursePurchase.controller.js";
+// import { createCheckoutSession, getAllPurchasedCourse, getCourseDetailWithPurchaseStatus, handleCashfreeWebhook } from "../controllers/coursePurchase.controller.js";
 
 const router = express.Router();
 
-router.post("/create-checkout-session", isAuthenticated, createCheckoutSession);
+// router.post("/create-checkout-session", isAuthenticated, createCheckoutSession);
 // router.post("/webhook", express.raw({ type: "application/json" }), cashfreeWebhook);
-router.post("/webhook", handleCashfreeWebhook);
+// router.post("/webhook", handleCashfreeWebhook);
+// router.get("/course/:courseId/detail-with-status", isAuthenticated, getCourseDetailWithPurchaseStatus);
+// router.get("/", isAuthenticated, getAllPurchasedCourse);
+
+import { createCashfreeOrder, verifyCashfreeOrder, getCourseDetailWithPurchaseStatus, getAllPurchasedCourse } from "../controllers/coursePurchase.controller.js";
+
+router.post("/create-order", isAuthenticated, createCashfreeOrder);
+router.get("/verify", isAuthenticated, verifyCashfreeOrder);
 router.get("/course/:courseId/detail-with-status", isAuthenticated, getCourseDetailWithPurchaseStatus);
 router.get("/", isAuthenticated, getAllPurchasedCourse);
+
+
+router.post("/create-order", createCashfreeOrder);
 
 
 export default router;

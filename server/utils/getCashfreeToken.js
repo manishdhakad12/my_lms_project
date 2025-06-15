@@ -1,15 +1,31 @@
-export const getCashfreeToken = async () => {
-  const response = await fetch("https://sandbox.cashfree.com/pg/v1/authorize", {
+export const getCashfreeToken = async (orderId, orderAmount) => {
+  const res = await fetch("https://sandbox.cashfree.com/api/v2/cftoken/order", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "x-client-id": process.env.CASHFREE_API_ID,
+      "x-client-secret": process.env.CASHFREE_SECRET_KEY,
     },
     body: JSON.stringify({
-      client_id: process.env.CASHFREE_API_ID,
-      client_secret: process.env.CASHFREE_SECRET_KEY,
+      orderId,
+      orderAmount: orderAmount.toString(),
+      orderCurrency: "INR",
     }),
   });
 
-  const data = await response.json();
-  return data.data.token; // access token
+  const text = await res.text();
+  console.log("🎯 getCashfreeToken response:", res.status, text);
+
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error("Invalid JSON from token endpoint");
+  }
+
+  if (!res.ok || data.status !== "OK") {
+    throw new Error(data.message || `Token failed (HTTP ${res.status})`);
+  }
+
+  return data.cftoken;
 };
