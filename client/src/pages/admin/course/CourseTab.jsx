@@ -18,18 +18,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import {
-//   useEditCourseMutation,
-//   useGetCourseByIdQuery,
-//   usePublishCourseMutation,
-// } from "@/features/api/courseApi";
+import {
+  useEditCourseMutation,
+  useGetCourseByIdQuery,
+  // useGetCourseByIdQuery,
+  usePublishCourseMutation,
+} from "@/features/api/courseApi";
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const CourseTab = () => {
-  const isLoading = false;
   
   const [input, setInput] = useState({
     courseTitle: "",
@@ -41,33 +41,33 @@ const CourseTab = () => {
     courseThumbnail: "",
   });
 
-//   const params = useParams();
-//   const courseId = params.courseId;
-//   const { data: courseByIdData, isLoading: courseByIdLoading , refetch} =
-//     useGetCourseByIdQuery(courseId);
+  const params = useParams();
+  const courseId = params.courseId;
+  const { data: courseByIdData, isLoading: courseByIdLoading , refetch} =
+    useGetCourseByIdQuery(courseId);
 
-//     const [publishCourse, {}] = usePublishCourseMutation();
+    const [publishCourse, {}] = usePublishCourseMutation();
  
-//   useEffect(() => {
-//     if (courseByIdData?.course) { 
-//         const course = courseByIdData?.course;
-//       setInput({
-//         courseTitle: course.courseTitle,
-//         subTitle: course.subTitle,
-//         description: course.description,
-//         category: course.category,
-//         courseLevel: course.courseLevel,
-//         coursePrice: course.coursePrice,
-//         courseThumbnail: "",
-//       });
-//     }
-//   }, [courseByIdData]);
+  useEffect(() => {
+    if (courseByIdData?.course) { 
+        const course = courseByIdData?.course;
+      setInput({
+        courseTitle: course.courseTitle,
+        subTitle: course.subTitle,
+        description: course.description,
+        category: course.category,
+        courseLevel: course.courseLevel,
+        coursePrice: course.coursePrice,
+        courseThumbnail: "",
+      });
+    }
+  }, [courseByIdData]);
 
   const [previewThumbnail, setPreviewThumbnail] = useState("");
   const navigate = useNavigate();
 
-//   const [editCourse, { data, isLoading, isSuccess, error }] =
-//     useEditCourseMutation();
+  const [editCourse, { data, isLoading, isSuccess, error }] =
+    useEditCourseMutation();
 
   const changeEventHandler = (e) => {
     const { name, value } = e.target;
@@ -91,41 +91,43 @@ const CourseTab = () => {
     }
   };
 
-//   const updateCourseHandler = async () => {
-//     const formData = new FormData();
-//     formData.append("courseTitle", input.courseTitle);
-//     formData.append("subTitle", input.subTitle);
-//     formData.append("description", input.description);
-//     formData.append("category", input.category);
-//     formData.append("courseLevel", input.courseLevel);
-//     formData.append("coursePrice", input.coursePrice);
-//     formData.append("courseThumbnail", input.courseThumbnail);
+  const updateCourseHandler = async () => {
+    const formData = new FormData();
+    formData.append("courseTitle", input.courseTitle);
+    formData.append("subTitle", input.subTitle);
+    formData.append("description", input.description);
+    formData.append("category", input.category);
+    formData.append("courseLevel", input.courseLevel);
+    formData.append("coursePrice", input.coursePrice);
+    formData.append("courseThumbnail", input.courseThumbnail);
 
-//     await editCourse({ formData, courseId });
-//   };
+    await editCourse({ formData, courseId });
 
-//   const publishStatusHandler = async (action) => {
-//     try {
-//       const response = await publishCourse({courseId, query:action});
-//       if(response.data){
-//         refetch();
-//         toast.success(response.data.message);
-//       }
-//     } catch (error) {
-//       toast.error("Failed to publish or unpublish course");
-//     }
-//   }
+    
+  };
 
-//   useEffect(() => {
-//     if (isSuccess) {
-//       toast.success(data.message || "Course update.");
-//     }
-//     if (error) {
-//       toast.error(error.data.message || "Failed to update course");
-//     }
-//   }, [isSuccess, error]);
+  const publishStatusHandler = async (action) => {
+    try {
+      const response = await publishCourse({courseId, query:action});
+      if(response.data){
+        refetch();
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      toast.error("Failed to publish or unpublish course");
+    }
+  }
 
-//   if(courseByIdLoading) return <h1>Loading...</h1>
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data.message || "Course update.");
+    }
+    if (error) {
+      toast.error(error.data.message || "Failed to update course");
+    }
+  }, [isSuccess, error]);
+
+  if(courseByIdLoading) return <h1>Loading...</h1>
  
   return (
     <Card>
@@ -137,11 +139,8 @@ const CourseTab = () => {
           </CardDescription> 
         </div>
         <div className="space-x-2">
-          {/* <Button disabled={courseByIdData?.course.lectures.length === 0} variant="outline" onClick={()=> publishStatusHandler(courseByIdData?.course.isPublished ? "false" : "true")}>
+          <Button disabled={courseByIdData?.course.lectures.length === 0} variant="outline" onClick={()=> publishStatusHandler(courseByIdData?.course.isPublished ? "false" : "true")}>
             {courseByIdData?.course.isPublished ? "Unpublished" : "Publish"}
-          </Button> */}
-          <Button  variant="outline" onClick={()=> publishStatusHandler()}>
-            publish
           </Button>
           <Button>Remove Course</Button>
         </div>
@@ -256,7 +255,7 @@ const CourseTab = () => {
             <Button onClick={() => navigate("/admin/course")} variant="outline">
               Cancel
             </Button>
-            <Button disabled={isLoading}>
+            <Button disabled={isLoading} onClick={updateCourseHandler}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

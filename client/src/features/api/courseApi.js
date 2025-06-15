@@ -40,12 +40,12 @@ export const courseApi = createApi({
     //     }
     //   }
     // }),
-    // getPublishedCourse: builder.query({
-    //   query: () => ({
-    //     url: "/published-courses",
-    //     method: "GET",
-    //   }),
-    // }),
+    getPublishedCourse: builder.query({
+      query: () => ({
+        url: "/published-courses",
+        method: "GET",
+      }),
+    }),
     getCreatorCourse: builder.query({
       query: () => ({
         url: "",
@@ -53,79 +53,79 @@ export const courseApi = createApi({
       }),
       providesTags: ["Refetch_Creator_Course"],
     }),
-    // editCourse: builder.mutation({
-    //   query: ({ formData, courseId }) => ({
-    //     url: `/${courseId}`,
-    //     method: "PUT",
-    //     body: formData,
-    //   }),
-    //   invalidatesTags: ["Refetch_Creator_Course"],
-    // }),
-    // getCourseById: builder.query({
-    //   query: (courseId) => ({
-    //     url: `/${courseId}`,
-    //     method: "GET",
-    //   }),
-    // }),
-    // createLecture: builder.mutation({
-    //   query: ({ lectureTitle, courseId }) => ({
-    //     url: `/${courseId}/lecture`,
-    //     method: "POST",
-    //     body: { lectureTitle },
-    //   }),
-    // }),
-    // getCourseLecture: builder.query({
-    //   query: (courseId) => ({
-    //     url: `/${courseId}/lecture`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["Refetch_Lecture"],
-    // }),
-    // editLecture: builder.mutation({
-    //   query: ({
-    //     lectureTitle,
-    //     videoInfo,
-    //     isPreviewFree,
-    //     courseId,
-    //     lectureId,
-    //   }) => ({
-    //     url: `/${courseId}/lecture/${lectureId}`,
-    //     method: "POST",
-    //     body: { lectureTitle, videoInfo, isPreviewFree },
-    //   }),
-    // }),
-    // removeLecture: builder.mutation({
-    //   query: (lectureId) => ({
-    //     url: `/lecture/${lectureId}`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ["Refetch_Lecture"],
-    // }),
-    // getLectureById: builder.query({
-    //   query: (lectureId) => ({
-    //     url: `/lecture/${lectureId}`,
-    //     method: "GET",
-    //   }),
-    // }),
-    // publishCourse: builder.mutation({
-    //   query: ({ courseId, query }) => ({
-    //     url: `/${courseId}?publish=${query}`,
-    //     method: "PATCH",
-    //   }),
-    // }),
+    editCourse: builder.mutation({
+      query: ({ formData, courseId }) => ({
+        url: `/${courseId}`,
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: ["Refetch_Creator_Course"],
+    }),
+    getCourseById: builder.query({
+      query: (courseId) => ({
+        url: `/${courseId}`,
+        method: "GET",
+      }),
+    }),
+    createLecture: builder.mutation({
+      query: ({ lectureTitle, courseId }) => ({
+        url: `/${courseId}/lecture`,
+        method: "POST",
+        body: { lectureTitle },
+      }),
+    }),
+    getCourseLecture: builder.query({
+      query: (courseId) => ({
+        url: `/${courseId}/lecture`,
+        method: "GET",
+      }),
+      providesTags: ["Refetch_Lecture"],
+    }),
+    editLecture: builder.mutation({
+      query: ({
+        lectureTitle,
+        videoInfo,
+        isPreviewFree,
+        courseId,
+        lectureId,
+      }) => ({
+        url: `/${courseId}/lecture/${lectureId}`,
+        method: "POST",
+        body: { lectureTitle, videoInfo, isPreviewFree },
+      }),
+    }),
+    removeLecture: builder.mutation({
+      query: (lectureId) => ({
+        url: `/lecture/${lectureId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Refetch_Lecture"],
+    }),
+    getLectureById: builder.query({
+      query: (lectureId) => ({
+        url: `/lecture/${lectureId}`,
+        method: "GET",
+      }),
+    }),
+    publishCourse: builder.mutation({
+      query: ({ courseId, query }) => ({
+        url: `/${courseId}?publish=${query}`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 export const {
   useCreateCourseMutation,
 //   useGetSearchCourseQuery,
-//   useGetPublishedCourseQuery,
+  useGetPublishedCourseQuery,
   useGetCreatorCourseQuery,
-//   useEditCourseMutation,
-//   useGetCourseByIdQuery,
-//   useCreateLectureMutation,
-//   useGetCourseLectureQuery,
-//   useEditLectureMutation,
-//   useRemoveLectureMutation,
-//   useGetLectureByIdQuery,
-//   usePublishCourseMutation,
+  useEditCourseMutation,
+  useGetCourseByIdQuery,
+  useCreateLectureMutation,
+  useGetCourseLectureQuery,
+  useEditLectureMutation,
+  useRemoveLectureMutation,
+  useGetLectureByIdQuery,
+  usePublishCourseMutation,
 } = courseApi;

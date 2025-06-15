@@ -1,13 +1,13 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 import Course from "./Course";
-// import { useGetPublishedCourseQuery } from "@/features/api/courseApi";
-const courses = [1,2,3,4,5,6];
-const Courses = () => {
-//   const {data, isLoading, isError} = useGetPublishedCourseQuery();
+import { useGetPublishedCourseQuery } from "@/features/api/courseApi";
  
-//   if(isError) return <h1>Some error occurred while fetching courses.</h1>
-const isLoading = false;
+const Courses = () => {
+  const {data, isLoading, isError} = useGetPublishedCourseQuery();
+ 
+  if(isError) return <h1>Some error occurred while fetching courses.</h1>
+
   return (
     <div className="bg-gray-50 dark:bg-[#141414]">
       <div className="max-w-7xl mx-auto p-6">
@@ -18,7 +18,7 @@ const isLoading = false;
               <CourseSkeleton key={index} />
             ))
           ) : (
-           courses.map((course, index) => <Course key={index} course={course}/>) 
+           data?.courses && data.courses.map((course, index) => <Course key={index} course={course}/>) 
           )}
         </div>
       </div>
