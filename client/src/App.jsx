@@ -16,6 +16,7 @@ import CreateLecture from './pages/admin/lecture/CreateLecture';
 import EditLecture from './pages/admin/lecture/EditLecture';
 import CourseDetail from './pages/student/CourseDetail';
 import CourseProgress from './pages/student/CourseProgress';
+import SearchPage from './pages/student/searchPage';
 
 const appRouter = createBrowserRouter([
   {
@@ -55,14 +56,14 @@ const appRouter = createBrowserRouter([
           // </ProtectedRoute>
         ),
       },
-      // {
-      //   path: "course/search",
-      //   element: (
-      //     <ProtectedRoute>
-      //       <SearchPage />
-      //     </ProtectedRoute>
-      //   ),
-      // },
+      {
+        path: "course/search",
+        element: (
+          // <ProtectedRoute>
+            <SearchPage />
+          // </ProtectedRoute>
+        ),
+      },
       {
         path: "course-detail/:courseId",
         element: (

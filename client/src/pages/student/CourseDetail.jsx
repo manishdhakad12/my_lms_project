@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-// import { useGetCourseDetailWithStatusQuery } from "@/features/api/purchaseApi";
+import { useGetCourseDetailWithStatusQuery } from "@/features/api/purchaseApi";
 import { BadgeInfo, Lock, PlayCircle } from "lucide-react";
 import React from "react";
 import ReactPlayer from "react-player";
@@ -19,18 +19,14 @@ const CourseDetail = () => {
   const params = useParams();
   const courseId = params.courseId;
   const navigate = useNavigate();
-  // const { data, isLoading, isError } =
-  //   useGetCourseDetailWithStatusQuery(courseId);
+  const { data, isLoading, isError } =
+    useGetCourseDetailWithStatusQuery(courseId);
 
-  // if (isLoading) return <h1>Loading...</h1>;
-  // if (isError) return <h>Failed to load course details</h>;
+  if (isLoading) return <h1>Loading...</h1>;
+  if (isError) return <h>Failed to load course details</h>;
 
-  // const { course, purchased } = data;
-  // console.log(purchased);
-
-  const course = [1,2,3,4];
-  const lecture = [1,2,3,4];
-  const purchased = false;
+  const { course, purchased } = data;
+  console.log(purchased);
 
   const handleContinueCourse = () => {
     if(purchased){
@@ -49,18 +45,18 @@ const CourseDetail = () => {
           <p>
             Created By{" "}
             <span className="text-[#C0C4FC] underline italic">
-              {/* {course?.creator.name} */}
+              {course?.creator.name}
               patel mernstack
             </span>
           </p>
           <div className="flex items-center gap-2 text-sm">
             <BadgeInfo size={16} />
-            <p>Last updated 3
-              {/* {course?.createdAt.split("T")[0]} */}
+            <p>Last updated
+              {course?.createdAt.split("T")[0]}
               </p>
           </div>
-          <p>Students enrolled: 8
-             {/* {course?.enrolledStudents.length} */}
+          <p>Students enrolled:
+             {course?.enrolledStudents.length}
              </p>
         </div>
       </div>
@@ -79,8 +75,8 @@ const CourseDetail = () => {
               <CardDescription>4 lectures</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              {/* {course.lectures.map((lecture, idx) => ( */}
-              {course.map((lecture, idx) => (
+              {course.lectures.map((lecture, idx) => (
+              // {course.map((lecture, idx) => (
                 <div key={idx} className="flex items-center gap-3 text-sm">
                   <span>
                     {true ? <PlayCircle size={14} /> : <Lock size={14} />}
@@ -98,7 +94,7 @@ const CourseDetail = () => {
                 <ReactPlayer
                   width="100%"
                   height={"100%"}
-                  // url={course.lectures[0].videoUrl}
+                  url={course.lectures[0].videoUrl}
                   controls={true}
                 />
               </div>
