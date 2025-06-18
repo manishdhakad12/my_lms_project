@@ -241,7 +241,7 @@ const MobileNavbar = ({user}) => {
       </SheetTrigger>
       <SheetContent className="flex flex-col">
         <SheetHeader className="flex flex-row items-center justify-between mt-2">
-          <SheetTitle>E-Learning</SheetTitle>
+          <SheetTitle> <Link to="/"></Link> E-Learning</SheetTitle>
           <DarkMode />
         </SheetHeader>
         <Separator className="mr-2" />
@@ -253,7 +253,7 @@ const MobileNavbar = ({user}) => {
         {user?.role === "instructor" && (
           <SheetFooter>
             <SheetClose asChild>
-              <Button>Dashboard</Button>
+              <Button type="submit" onClick={()=> navigate("/admin/dashboard")}>Dashboard</Button>
             </SheetClose>
           </SheetFooter>
         )}
