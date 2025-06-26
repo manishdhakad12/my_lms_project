@@ -82,63 +82,6 @@ export const logout = async (req,res) => {
         })
     }
 }
-// export const getUserProfile = async(req,res) => {
-//     try {
-//         const userId = req.id;
-//         const user = await User.findById(userId).select("-password").populate("enrolledCourses");
-//         if(!user){
-//             return res.status(404).json({
-//                 message:"profile not found",
-//                 success:false
-//             })
-//         }
-//         return res.status(200).json({
-//             success:true,
-//             user
-//         })
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json({
-//             success:false,
-//             message:"Failed to logout"
-//         })
-//     }
-// }
-
-// export const getUserProfile = async (req, res) => {
-//   try {
-//     const userId = req.id || req.user?._id;
-
-//     if (!userId) {
-//       return res.status(401).json({
-//         success: false,
-//         message: "Unauthorized access. User ID not found.",
-//       });
-//     }
-
-//     const user = await User.findById(userId)
-//       .select("-password")
-//       .populate("enrolledCourses");
-
-//     if (!user) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "Profile not found",
-//       });
-//     }
-
-//     return res.status(200).json({
-//       success: true,
-//       user,
-//     });
-//   } catch (error) {
-//     console.error("getUserProfile error:", error.message);
-//     return res.status(500).json({
-//       success: false,
-//       message: "Failed to fetch user profile",
-//     });
-//   }
-// };
 
 export const getUserProfile = async (req, res) => {
   try {
