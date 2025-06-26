@@ -46,12 +46,15 @@ import cors from "cors";
 import courseRoute from "./routes/course.route.js";
 import mediaRoute from "./routes/media.route.js";
 import purchaseRoute from "./routes/purchaseCourse.route.js";
-import courseProgressRoute from "./routes/courseProgress.route.js"
+import courseProgressRoute from "./routes/courseProgress.route.js";
+import { cashfreeWebhook } from "./controllers/coursePurchase.controller.js";
 
-dotenv.config();
+dotenv.config({});
 connectDB();
 
 const app = express();
+
+// app.use("/api/v1/purchase/webhook", express.raw({ type: "application/json" }));
 
 app.use(
   express.json({
@@ -61,13 +64,13 @@ app.use(
     }
   })
 );
+app.use(cookieParser());
 
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true
 }));
-app.use(cookieParser());
-
+app.post("/api/v1/purchase/webhook", cashfreeWebhook);
 app.use("/api/v1/media", mediaRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/course", courseRoute);

@@ -139,7 +139,13 @@ export const authApi = createApi({
                 body:formData,
                 credentials:"include"
             })
-        })
+        }),
+        updateUserToInstructor: builder.mutation({
+  query: () => ({
+    url: "/role/instructor",
+    method: "PUT",
+  }),
+}),
     })
 });
 export const {
@@ -147,5 +153,6 @@ export const {
     useLoginUserMutation,
     useLogoutUserMutation,
     useLoadUserQuery,
-    useUpdateUserMutation
+    useUpdateUserMutation,
+    useUpdateUserToInstructorMutation
 } = authApi;

@@ -290,6 +290,7 @@ export const cashfreeWebhook = async (req, res) => {
   const ts = req.headers["x-webhook-timestamp"];
   const sig = req.headers["x-webhook-signature"];
   const raw = req.rawBody;
+  // const raw = req.body.toString("utf8");
 
   const expected = crypto
     .createHmac("sha256", process.env.CASHFREE_SECRET_KEY)
@@ -345,7 +346,21 @@ export const cashfreeWebhook = async (req, res) => {
     if (purchase.status === "completed") {
       // unlock and enroll logic...
       console.log("🔓 Course unlocked for user", purchase.userId);
+
+      await User.findByIdAndUpdate(
+  purchase.userId,
+  { $addToSet: { enrolledCourses: purchase.courseId._id } }
+);
+
+// ✅ Add user to course's enrolledStudents
+await Course.findByIdAndUpdate(
+  purchase.courseId._id,
+  { $addToSet: { enrolledStudents: purchase.userId } }
+);
+
+console.log("✅ User and course updated with enrollment");
     }
+    
   } else {
     console.log("Purchase already processed:", purchase.status);
   }

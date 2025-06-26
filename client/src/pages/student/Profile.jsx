@@ -202,6 +202,8 @@ import {
   useUpdateUserMutation,
 } from "@/features/api/authApi";
 import { toast } from "sonner";
+import { useUpdateUserToInstructorMutation } from "@/features/api/authApi";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -218,6 +220,19 @@ const Profile = () => {
       isSuccess,
     },
   ] = useUpdateUserMutation();
+
+  const [updateToInstructor, { isLoading: instructorLoading }] = useUpdateUserToInstructorMutation();
+  const navigate = useNavigate();
+
+  const becomeInstructorHandler = async () => {
+    try {
+      const res = await updateToInstructor().unwrap();
+      toast.success(res.message || "You are now an instructor.");
+      refetch();
+    } catch (err) {
+      toast.error(err?.data?.message || "Failed to update role.");
+    }
+  };
 
   console.log(data);
 
@@ -298,6 +313,11 @@ const Profile = () => {
                 Edit Profile
               </Button>
             </DialogTrigger>
+            {user.role === "student" && (
+    <Button onClick={becomeInstructorHandler} disabled={instructorLoading} className="mt-2 ml-4">
+      {instructorLoading ? "Please wait..." : "Become an Instructor"}
+    </Button>
+  )}
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Edit Profile</DialogTitle>
