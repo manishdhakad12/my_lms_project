@@ -9,11 +9,17 @@ import mediaRoute from "./routes/media.route.js";
 import purchaseRoute from "./routes/purchaseCourse.route.js";
 import courseProgressRoute from "./routes/courseProgress.route.js";
 import { cashfreeWebhook } from "./controllers/coursePurchase.controller.js";
+import path from "path";
+import { match } from "path-to-regexp";
 
 dotenv.config({});
 connectDB();
 
+const PORT = process.env.PORT || 8080;
+
 const app = express();
+
+const _dirname = path.resolve();
 
 // app.use("/api/v1/purchase/webhook", express.raw({ type: "application/json" }));
 
@@ -28,7 +34,7 @@ app.use(
 app.use(cookieParser());
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://my-lms-project-client.onrender.com",
   credentials: true
 }));
 app.post("/api/v1/purchase/webhook", cashfreeWebhook);
@@ -38,4 +44,14 @@ app.use("/api/v1/course", courseRoute);
 app.use("/api/v1/purchase", purchaseRoute);
 app.use("/api/v1/progress", courseProgressRoute);
 
-app.listen(8080, () => console.log("Server listening on port 8080"));
+app.use(express.static(path.join(_dirname, "/client/dist")));
+// app.get('/*', (req,res) => {
+//     res.sendFile(path.resolve(_dirname, "client", "dist", "index.html"));
+// });
+
+app.get(/^\/(?!api\/v1\/).*/, (req, res) => {
+  res.sendFile(path.resolve(_dirname, "client", "dist", "index.html"));
+});
+
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
