@@ -34,7 +34,7 @@ app.use(
 app.use(cookieParser());
 
 app.use(cors({
-  origin: "https://my-lms-project-client.onrender.com",
+  origin: "https://my-lms-project-client-jyfh.onrender.com",
   credentials: true
 }));
 app.post("/api/v1/purchase/webhook", cashfreeWebhook);
