@@ -29,7 +29,7 @@ export const createCashfreeOrder = async (req, res) => {
         customer_phone: req.user?.phone || "9876543210"
       },
       order_meta: {
-        return_url: `http://localhost:5173/course-progress/${course._id}?order_id=${newPurchase._id}`,
+        return_url: `https://my-lms-project-client-jyfh.onrender.com/course-progress/${course._id}?order_id=${newPurchase._id}`,
       },
     };
 
