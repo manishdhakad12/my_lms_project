@@ -16,7 +16,7 @@ import CreateLecture from './pages/admin/lecture/CreateLecture';
 import EditLecture from './pages/admin/lecture/EditLecture';
 import CourseDetail from './pages/student/CourseDetail';
 import CourseProgress from './pages/student/CourseProgress';
-import SearchPage from './pages/student/searchPage';
+import SearchPage from './pages/student/SearchPage';
 import { AdminRoute, AuthenticatedUser, ProtectedRoute } from './components/ProtectedRoutes';
 import PurchaseCourseProtectedRoute from './components/PurchaseCourseProtectedRoute';
 import { ThemeProvider } from './components/ThemeProvider';
